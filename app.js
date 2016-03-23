@@ -12,92 +12,63 @@ var ulTagSix = document.getElementById('ravenna');
 function getRandomIntInclusive(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-function getSalesData(minPizza, maxPizza, minDelivery, maxDelivery){
-  // var minPizza = 0;
-  // var maxPizza = 4;
-  // var minDelivery = 0;
-  // var maxDelivery = 4;
+
+function getSalesData(time, minPizza, maxPizza, minDelivery, maxDelivery){
   var randomPizza = getRandomIntInclusive (minPizza, maxPizza);
   var randomDelivery = getRandomIntInclusive(minDelivery, maxDelivery);
   return {
+    time: time,
     pizzasSold: randomPizza,
     deliveriesMade: randomDelivery
   };
-
-  console.log('8am-11am random pizzas: ' + randomPizza + ' random deliveries: ' + randomDelivery);
 }
 
-function get11amTo2am(){
-  var minPizza1 = 0;
-  var maxPizza1 = 7;
-  var minDelivery1 = 0;
-  var maxDelivery1 = 4;
-  var randomPizza1 = getRandomIntInclusive (minPizza1, maxPizza1);
-  var randomDelivery1 = getRandomIntInclusive(minDelivery1, maxDelivery1);
-  console.log('11am-2am random pizzas: ' + randomPizza1 + ' random deliveries: ' + randomDelivery1);
-}
+function createLocation(name){
+  var storedLocation = {
+    name: name,
+    salesData: []
+  };
 
-function get2pmTo5pm(){
-  var minPizza2 = 2;
-  var maxPizza2 = 15;
-  var minDelivery2 = 1;
-  var maxDelivery2 = 4;
-  var randomPizza2 = getRandomIntInclusive (minPizza2, maxPizza2);
-  var randomDelivery2 = getRandomIntInclusive(minDelivery2, maxDelivery2);
-  console.log('2pm-5pm random pizzas: ' + randomPizza2 + ' random deliveries: ' + randomDelivery2);
+  var eightOClock = getSalesData('8:00am', 0, 4, 0, 4);
+  storedLocation.salesData.push(eightOClock);
+  var nineOClock = getSalesData('9:00am', 0, 4, 0, 4);
+  storedLocation.salesData.push(nineOClock);
+  var tenOClock = getSalesData('10:00am', 0 , 4, 0, 4);
+  storedLocation.salesData.push(tenOClock);
+  var elevenOClock = getSalesData('11:00am', 0 , 4, 0, 4);
+  storedLocation.salesData.push(elevenOClock);
+  return storedLocation;
 }
-function get5pmTo8pm(){
-  var minPizza3 = 15;
-  var maxPizza3 = 35;
-  var minDelivery3 = 3;
-  var maxDelivery3 = 8;
-  var randomPizza3 = getRandomIntInclusive (minPizza1, maxPizza1);
-  var randomDelivery3 = getRandomIntInclusive(minDelivery3, maxDelivery3);
-  console.log('5pm-8pm random pizzas: ' + randomPizza3 + ' random deliveries: ' + randomDelivery3);
-}
-function get8pmTo11pm(){
-  var minPizza4 = 12;
-  var maxPizza4 = 31;
-  var minDelivery4 = 5;
-  var maxDelivery4 = 12;
-  var randomPizza4 = getRandomIntInclusive (minPizza1, maxPizza1);
-  var randomDelivery4 = getRandomIntInclusive(minDelivery4, maxDelivery4);
-  console.log('8pm-11pm random pizzas: ' + randomPizza4 + ' random deliveries: ' + randomDelivery4);
-}
-function get11pmTo2am(){
-  var minPizza5 = 5;
-  var maxPizza5 = 20;
-  var minDelivery5 = 6;
-  var maxDelivery5 = 11;
-  var randomPizza5 = getRandomIntInclusive (minPizza5, maxPizza5);
-  var randomDelivery5 = getRandomIntInclusive(minDelivery5, maxDelivery5);
-  console.log('11pm-2am random pizzas: ' + randomPizza5 + ' random deliveries: ' + randomDelivery5);
-}
+var ballard = createLocation('ballard');
+var firstHill = createLocation('first-hill');
+var intDist = createLocation('int-dist');
+var southLakeUnion = createLocation('south-lake-union');
+var georgeTown = createLocation('george-town');
+var ravenna = createLocation('ravenna');
+// get access to the ballard ul
+var ballardUL = document.getElementById(ballard.name);
+var firstHillUL = document.getElementById(firstHill.name);
+var intDistUL = document.getElementById(intDist.name);
+var southLakeUnionUL = document.getElementById(southLakeUnion.name);
+var georgeTownUL = document.getElementById(georgeTown.name);
+var ravennaUL = document.getElementById(ravenna.name);
 
-// Duncans Notes below VVVVVVV
-// function getRandomIntInclusive(min, max) {
-//   return Math.floor(Math.random() * (max - min + 1)) + min;
-// }
-// function addHourlySalesDataToLocation(storedLocation, pizzaSold, deliveriesMade){
-//   storedLocation.hourlyData.push({
-//     time: time,
-//     pizzaSold: pizzaSold,
-//     deliveriesMade: deliveriesMade,
-//     driversNeeded: Math.ceil(deliveriesMade / 3)
-//   });
-//
-//   var ballard = {
-//     name: 'ballard',
-//     hourlyData:[]
-//   };
-//   addHourlySalesDataToLocation(ballard, '8:00am', getRandomIntInclusive(0,4), getRandomIntInclusive(0,4));
-//   var ballardUL = document.getElementById(ballard.name);
-//   var eightOClockli;
-//   for (var i = 0; i < ballard.hourlyData.length; i++){
-//     eightOClockli = document.createElement('li');
-//     eightOClockli.textcontent = ballardUL.hourlyData[0].time + ' pizzas sold:' +
-//   ballard.hourlyData[i].pizzaSold;
-//     ballardUL.appendChild(eightOClockli);
-//   }
-// }
-// addHourlySalesDataToLocation();
+// add the 8am data
+var eightAmLi = document.createElement('li');
+eightAmLi.textContent = ballard.salesData[0].time + ' ' + ballard.salesData[0].pizzasSold;
+ballardUL.appendChild(eightAmLi);
+
+// add the 9am data
+var nineAmLi = document.createElement('li');
+nineAmLi.textContent = ballard.salesData[1].time + ' ' + ballard.salesData[1].pizzasSold;
+ballardUL.appendChild(nineAmLi);
+
+// add the 10am data
+var tenAmLi = document.createElement('li');
+tenAmLi.textContent = ballard.salesData[2].time + ' ' + ballard.salesData[2].pizzasSold;
+ballardUL.appendChild(tenAmLi);
+
+// add the 11am data
+var elevenAmLi = document.createElement('li');
+elevenAmLi.textContent = ballard.salesData[3].time + ' ' + ballard.salesData[3].pizzasSold;
+ballardUL.appendChild(elevenAmLi);
